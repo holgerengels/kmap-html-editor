@@ -20,7 +20,7 @@ interface ArgTypes {
 }
 
 const Template: Story<ArgTypes> = ({
-  value = '<p></p>',
+  value = '<p>Test</p>',
 }: ArgTypes) => html`
   <kmap-html-editor
     .value=${value}

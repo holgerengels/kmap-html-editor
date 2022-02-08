@@ -1,5 +1,5 @@
 import {LitElement, html, css, PropertyValues} from "lit";
-import {property, query} from "lit/decorators.js";
+import {property, query, state} from "lit/decorators.js";
 import {EditorState, basicSetup} from "@codemirror/basic-setup";
 import {EditorView, keymap, ViewUpdate} from "@codemirror/view"
 import {indentWithTab} from "@codemirror/commands";
@@ -7,6 +7,7 @@ import {html as lang} from "@codemirror/lang-html";
 
 export class KmapHtmlEditor extends LitElement {
 
+  @state()
   private _view!: EditorView;
 
   private _value: string = '';

@@ -57,14 +57,21 @@ export class KmapHtmlEditor extends LitElement {
   static get styles() {
     // language=CSS
     return css`
-    .cm-editor {
-      border-bottom: 2px solid transparent;
-      transition: border-bottom-color .3s ease-in-out;
-    }
-    .cm-editor.cm-focused {
-      outline: none !important;
-      border-bottom: 2px solid gray;
-    }
+      :host {
+        display: block;
+      }
+      #editor {
+        display: contents;
+      }
+      .cm-editor {
+        height: 100%;
+        border-bottom: 2px solid transparent;
+        transition: border-bottom-color .3s ease-in-out;
+      }
+      .cm-editor.cm-focused {
+        outline: none !important;
+        border-bottom: 2px solid gray;
+      }
     `;
   }
 

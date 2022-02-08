@@ -9,8 +9,7 @@ export class KmapHtmlEditor extends LitElement {
 
   private _view!: EditorView;
 
-  @property()
-  public value: string = '';
+  private _value: string = '';
 
   @query('#editor')
   _editor!: HTMLDivElement;
@@ -32,8 +31,17 @@ export class KmapHtmlEditor extends LitElement {
     });
   }
 
+  set value(value: string) {
+    const old = this._value;
+    this._value = value;
+    this.requestUpdate('value', old);
+  }
+
+  @property()
+  get value() { return this._value; }
+
   private _change(change: ViewUpdate) {
-    this.value = this._view.state.doc.toString();
+    this._value = this._view.state.doc.toString();
     console.log(this.value);
     this.dispatchEvent(new CustomEvent('change', {bubbles: true, composed: true, detail: { value: this.value }}));
   }

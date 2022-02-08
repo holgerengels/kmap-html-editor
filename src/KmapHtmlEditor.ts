@@ -27,7 +27,8 @@ export class KmapHtmlEditor extends LitElement {
           //tabSize.of(EditorState.tabSize.of(2)),
           EditorView.updateListener.of(update => this._change(update)),
           lang()]}),
-      parent: this._editor,
+      //parent: this._editor,
+      parent: this.shadowRoot!,
     });
   }
 
@@ -47,7 +48,7 @@ export class KmapHtmlEditor extends LitElement {
   }
 
   protected willUpdate(_changedProperties: PropertyValues) {
-    if (_changedProperties.has("value") && this._view) {
+    if ((_changedProperties.has("value") || _changedProperties.has("_view")) && this._view) {
       this._view.dispatch({
         changes: {from: 0, to: this._view.state.doc.length, insert: this.value}
       });
@@ -57,12 +58,6 @@ export class KmapHtmlEditor extends LitElement {
   static get styles() {
     // language=CSS
     return css`
-      :host {
-        display: block;
-      }
-      #editor {
-        display: contents;
-      }
       .cm-editor {
         height: 100%;
         border-bottom: 2px solid transparent;
@@ -70,14 +65,18 @@ export class KmapHtmlEditor extends LitElement {
       }
       .cm-editor.cm-focused {
         outline: none !important;
-        border-bottom: 2px solid gray;
+        border-bottom: 2px solid #4c8bba;
+      }
+      .cm-scroller {
+        overflow: auto;
       }
     `;
   }
 
   protected render(): unknown {
     // language=HTML
-    return html`<div id="editor"></div>`;
+    //return html`<div id="editor"></div>`;
+    return html``;
   }
 }
 

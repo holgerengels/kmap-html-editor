@@ -44,7 +44,6 @@ export class KmapHtmlEditor extends LitElement {
 
   private _change(change: ViewUpdate) {
     this._value = this._view.state.doc.toString();
-    console.log(this.value);
     this.dispatchEvent(new CustomEvent('change', {bubbles: true, composed: true, detail: { value: this.value }}));
   }
 

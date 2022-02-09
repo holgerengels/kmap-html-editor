@@ -6,6 +6,7 @@ export default {
   component: 'kmap-html-editor',
   argTypes: {
     value: { control: 'text' },
+    placeholder: { control: 'text' },
   },
 };
 
@@ -17,13 +18,16 @@ interface Story<T> {
 
 interface ArgTypes {
   value?: string;
+  placeholder?: string;
 }
 
 const Template: Story<ArgTypes> = ({
   value = '<p>Test</p>',
+  placeholder = 'Editor ..',
 }: ArgTypes) => html`
   <kmap-html-editor
     .value=${value}
+    .placeholder="${placeholder}"
   >
   </kmap-html-editor>
 `;
@@ -33,4 +37,5 @@ export const Regular = Template.bind({});
 export const CustomExpression = Template.bind({});
 CustomExpression.args = {
   value: '<p>Test</p>',
+  placeholder: 'Editor ..',
 };

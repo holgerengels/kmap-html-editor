@@ -1,7 +1,7 @@
 import {LitElement, html, css, PropertyValues} from "lit";
 import {property, query, state} from "lit/decorators.js";
 import {EditorState, basicSetup} from "@codemirror/basic-setup";
-import {EditorView, keymap, ViewUpdate} from "@codemirror/view"
+import {EditorView, keymap, ViewUpdate, placeholder} from "@codemirror/view"
 import {indentWithTab} from "@codemirror/commands";
 import {html as lang} from "@codemirror/lang-html";
 
@@ -15,20 +15,27 @@ export class KmapHtmlEditor extends LitElement {
   @query('#editor')
   _editor!: HTMLDivElement;
 
+  @property()
+  private placeholder?: string = undefined;
+
   constructor() {
     super();
     this._change = throttle(this._change, 2100, this);
   }
 
   firstUpdated() {
+    const extensions = [
+      basicSetup,
+      keymap.of([indentWithTab]),
+      EditorState.tabSize.of((2)),
+      EditorView.updateListener.of(update => this._change(update)),
+      lang()];
+
+    if (this.placeholder)
+      extensions.push(placeholder(this.placeholder))
+
     this._view = new EditorView({
-      state: EditorState.create({extensions: [
-          basicSetup,
-          keymap.of([indentWithTab]),
-          //tabSize.of(EditorState.tabSize.of(2)),
-          EditorView.updateListener.of(update => this._change(update)),
-          lang()]}),
-      //parent: this._editor,
+      state: EditorState.create({extensions}),
       parent: this.shadowRoot!,
     });
   }

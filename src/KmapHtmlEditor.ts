@@ -2,7 +2,7 @@ import {LitElement, html, css, PropertyValues} from "lit";
 import {property, query, state} from "lit/decorators.js";
 import {EditorState, basicSetup} from "@codemirror/basic-setup";
 import {EditorView, keymap, ViewUpdate, placeholder} from "@codemirror/view"
-import {indentWithTab} from "@codemirror/commands";
+import {indentSelection, indentWithTab} from "@codemirror/commands";
 import {html as lang} from "@codemirror/lang-html";
 
 export class KmapHtmlEditor extends LitElement {
@@ -26,7 +26,7 @@ export class KmapHtmlEditor extends LitElement {
   firstUpdated() {
     const extensions = [
       basicSetup,
-      keymap.of([indentWithTab]),
+      keymap.of([indentWithTab, {key: 'Ctrl-Alt-i', run: indentSelection}]),
       EditorState.tabSize.of((2)),
       EditorView.updateListener.of(update => this._change(update)),
       lang()];

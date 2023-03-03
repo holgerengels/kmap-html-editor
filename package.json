@@ -1,6 +1,6 @@
 {
   "name": "kmap-html-editor",
-  "version": "0.9.10",
+  "version": "0.9.11",
   "description": "Webcomponent kmap-html-editor following open-wc recommendations",
   "author": "Holger Engels",
   "repository": {
@@ -45,7 +45,6 @@
   "devDependencies": {
     "@open-wc/eslint-config": "^4.3.0",
     "@open-wc/testing": "next",
-    "@types/katex": "^0.11.1",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.29.2",
     "@web/dev-server": "^0.1.29",
@@ -58,7 +57,7 @@
     "lint-staged": "^10.5.4",
     "prettier": "^2.3.2",
     "tslib": "^2.4.1",
-    "typescript": "~4.8.4"
+    "typescript": "~4.9.4"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",

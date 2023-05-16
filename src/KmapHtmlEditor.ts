@@ -1,9 +1,20 @@
-import {LitElement, html, css, PropertyValues} from "lit";
+import {css, html, LitElement, PropertyValues} from "lit";
 import {property, query, state} from "lit/decorators.js";
-import {EditorState, basicSetup} from "@codemirror/basic-setup";
-import {EditorView, keymap, ViewUpdate, placeholder} from "@codemirror/view"
-import {indentSelection, indentWithTab} from "@codemirror/commands";
+import {
+  EditorView,
+  gutter, highlightActiveLine,
+  highlightActiveLineGutter,
+  highlightSpecialChars,
+  keymap,
+  lineNumbers,
+  ViewUpdate
+} from "@codemirror/view";
+import {defaultKeymap, history, historyKeymap, indentSelection, indentWithTab} from "@codemirror/commands";
 import {html as lang} from "@codemirror/lang-html";
+import {EditorState} from "@codemirror/state";
+import {bracketMatching, defaultHighlightStyle, indentOnInput, syntaxHighlighting} from "@codemirror/language";
+import {autocompletion, closeBrackets, closeBracketsKeymap, completionKeymap} from "@codemirror/autocomplete";
+import {searchKeymap} from "@codemirror/search";
 
 export class KmapHtmlEditor extends LitElement {
 
@@ -24,18 +35,43 @@ export class KmapHtmlEditor extends LitElement {
   }
 
   firstUpdated() {
-    const extensions = [
-      basicSetup,
-      keymap.of([indentWithTab, {key: 'Ctrl-Alt-i', run: indentSelection}]),
-      EditorState.tabSize.of((2)),
-      EditorView.updateListener.of(update => this._change(update)),
-      lang()];
-
+    /*
     if (this.placeholder)
       extensions.push(placeholder(this.placeholder))
-
+    */
     this._view = new EditorView({
-      state: EditorState.create({extensions}),
+      extensions: [
+        lineNumbers(),
+        highlightActiveLineGutter(),
+        highlightSpecialChars(),
+        history(),
+        indentOnInput(),
+        syntaxHighlighting(defaultHighlightStyle, {fallback: true}),
+        bracketMatching(),
+        closeBrackets(),
+        autocompletion(),
+        //rectangularSelection(),
+        //crosshairCursor(),
+        highlightActiveLine(),
+        //highlightSelectionMatches(),
+        keymap.of([
+          {key: 'Ctrl-Alt-i', run: indentSelection},
+          //indentWithTab,
+          ...closeBracketsKeymap,
+          ...defaultKeymap,
+          ...searchKeymap,
+          ...historyKeymap,
+          //...foldKeymap,
+          ...completionKeymap,
+          //...lintKeymap,
+        ]),
+        EditorView.updateListener.of(update => this._change(update)),
+        lang({extraTags: {
+            "container": {globalAttrs: false, children: ["box", "growbox"]},
+          }}),
+        EditorState.tabSize.of(2),
+        EditorView.lineWrapping,
+      ],
       parent: this.shadowRoot!,
     });
   }

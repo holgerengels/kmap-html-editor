@@ -1,6 +1,6 @@
 {
   "name": "kmap-html-editor",
-  "version": "0.9.11",
+  "version": "0.9.12",
   "description": "Webcomponent kmap-html-editor following open-wc recommendations",
   "author": "Holger Engels",
   "repository": {
@@ -36,11 +36,14 @@
     "storybook:build": "tsc && build-storybook"
   },
   "dependencies": {
-    "@codemirror/basic-setup": "^0.20.0",
-    "@codemirror/commands": "^0.20.0",
-    "@codemirror/lang-html": "^0.20.0",
-    "@codemirror/state": "^0.20.0",
-    "@codemirror/view": "^0.20.6"
+    "lit": "^2.5.0",
+    "@codemirror/commands": "^6.2.4",
+    "@codemirror/autocomplete": "^6.7.1",
+    "@codemirror/search": "^6.4.0",
+    "@codemirror/language": "^6.6.0",
+    "@codemirror/lang-html": "^6.4.3",
+    "@codemirror/state": "^6.2.0",
+    "@codemirror/view": "^6.11.2"
   },
   "devDependencies": {
     "@open-wc/eslint-config": "^4.3.0",
